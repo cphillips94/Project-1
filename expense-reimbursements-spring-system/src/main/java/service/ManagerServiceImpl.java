@@ -7,7 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import dao.ManagerDao;
-import dao.ManagerJdbcDaoImpl;
+import dao.ReimbursementDao;
+import dao.ResolvedReimbursementDao;
 import exceptions.SystemException;
 import pojo.EmployeePojo;
 import pojo.ManagerPojo;
@@ -17,6 +18,10 @@ public class ManagerServiceImpl implements ManagerService{
 	
 	@Autowired
 	ManagerDao managerDao;
+	@Autowired
+	ReimbursementDao reimbursementDao;
+	@Autowired
+	ResolvedReimbursementDao resolvedReimbursementDao;
 	
 	public static final Logger LOG = LogManager.getLogger(ManagerServiceImpl.class);
 	

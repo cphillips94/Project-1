@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import dao.EmployeeDao;
 import dao.ReimbursementDao;
+import dao.ResolvedReimbursementDao;
 import entity.EmployeeEntity;
 import entity.ReimbursementEntity;
 import exceptions.SystemException;
@@ -22,6 +23,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 	EmployeeDao employeeDao;
 	@Autowired
 	ReimbursementDao reimbursementDao;
+	@Autowired
+	ResolvedReimbursementDao resolvedReimbursementDao;
 	
 	public EmployeeServiceImpl() {
 		//employeeDao = new EmployeeJdbcDaoImpl();
@@ -34,7 +37,13 @@ public class EmployeeServiceImpl implements EmployeeService{
 		LOG.info("Entering employeeLogin() in Service Layer");
 		
 		EmployeePojo employeePojo = null;
-		EmployeePojo loginAttempt = EmployeeService.fetchEmployee(employeeId);
+		EmployeePojo loginAttempt;
+		try {
+			loginAttempt = EmployeeService.fetchEmployee(employeeId);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			throw new SystemException();
+		}
 		if (loginAttempt.getEmployeePassword().equals(employeePassword)) {
 			employeePojo = loginAttempt;
 		}
